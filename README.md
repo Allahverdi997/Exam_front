@@ -33,8 +33,8 @@ src/
  ├─ app/
  │   ├─ components/
  │   │   ├─ sidebar/        # Yan menyu komponenti
- │   │   ├─ student/        # Şagirdlər üçün list/add/update modal
- │   │   ├─ lesson/         # Dərslər üçün list/add/update modal
+ │   │   ├─ student/        # Şagirdlər üçün list/add modal
+ │   │   ├─ lesson/         # Dərslər üçün list/add modal
  │   │   └─ exam-result/    # İmtahan nəticələri
  │   ├─ services/
  │   │   └─ exam-service.ts # Backend ilə API çağırışları
@@ -53,34 +53,25 @@ Sidebar / Navigation
 Şagirdlər
 - Şagird listi table formatında göstərilir.
 - Yeni şagird əlavə etmək üçün modal istifadə olunur.
-- Şagird redaktəsi modal ilə edilir.
 - Reactive Forms ilə validation təmin olunub.
 
 Dərslər
 - Dərs listi göstərilir.
-- Yeni dərs əlavə və mövcud dərsləri redaktə etmək mümkündür.
+- Yeni dərs əlavə etmək mümkündür.
 - Dərslər üçün validasiya mövcuddur.
 
 İmtahan Nəticələri
 - Dərs və şagird seçərək imtahan nəticəsi əlavə edilir.
-- Exam Date yalnız bu gün və sonrakı gün ola bilər.
 - Qiymət 0–10 arasında olmalıdır.
-- Table-da pagination və scroll dəstəyi var.
+- Table-da scroll dəstəyi var.
 
 Loading / Feedback
 - Əməliyyatlar zamanı spinner göstərilir.
 - Success və error bildirişləri SweetAlert2 vasitəsilə göstərilir.
 
-Custom Validators
-- todayOrFutureValidator – tarix yalnız bu gün və gələcək ola bilər.
-
 Backend API
-- GET, POST, PUT əməliyyatları üçün servis layer istifadə olunur.
+- GET, PUT əməliyyatları üçün servis layer istifadə olunur.
 - JWT token ilə authentication mümkündür.
-
-Pagination
-- Table-larda server və client tərəfli pagination var.
-- 15-dən çox məlumat olanda scroll avtomatik görünür.
 
 Validasiya Mesajları
 - Şagird və dərs formalarında required, maxLength və min/max validasiyaları var.
