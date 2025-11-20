@@ -77,3 +77,9 @@ Validasiya Mesajları
 - Şagird və dərs formalarında required, maxLength və min/max validasiyaları var.
 - İmtahan nəticəsində examDate validasiyası və examValue 0–10 aralığı təmin edilir.
 
+User ceredentials:
+   username --> Admin
+   password --> Admin123!
+
+   username --> User
+   password --> User123!
