@@ -1,0 +1,114 @@
+<div class="container mt-4">
+
+  <!-- Add Student Button -->
+  <div class="mb-3">
+    <button class="btn btn-success" (click)="openAddModal()">
+      <i class="fas fa-plus me-2"></i> Yeni Şagird Əlavə Et
+    </button>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center mb-3">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Students List -->
+  <div class="card shadow-sm">
+    <div class="card-header bg-secondary text-white">
+      Şagirdlər
+    </div>
+    <div class="card-body p-0" style="max-height: 400px; overflow-y: auto;">
+      <table class="table table-striped mb-0">
+        <thead>
+          <tr>
+            <th>Adı</th>
+            <th>Soyadı</th>
+            <th>Sinifi</th>
+            <th>Nömrəsi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of students; let i = index">
+            <td>{{ student.name }}</td>
+            <td>{{ student.surname }}</td>
+            <td>{{ student.class }}</td>
+            <td>{{ student.number }}</td>
+          </tr>
+          <tr *ngIf="students.length === 0 && !isLoading">
+            <td colspan="5" class="text-center">Heç bir şagird tapılmadı</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Add / Update Modal -->
+  <div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form [formGroup]="studentForm" (ngSubmit)="submit()">
+  <div class="modal-header bg-primary text-white">
+    <h5 class="modal-title" id="studentModalLabel">
+      {{ isEditMode ? 'Şagirdi Redaktə Et' : 'Yeni Şagird Əlavə Et' }}
+    </h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <!-- Hidden ID -->
+    <input type="number" hidden formControlName="id">
+
+    <!-- Number -->
+    <div class="mb-2">
+      <input type="number" formControlName="number" class="form-control" placeholder="Nömrəsi">
+      <div class="text-danger mt-1" *ngIf="studentForm.get('number')?.touched && studentForm.get('number')?.invalid">
+        <div *ngIf="studentForm.get('number')?.errors?.['required']">Nömrə daxil edilməlidir.</div>
+        <div *ngIf="studentForm.get('number')?.errors?.['min']">Nömrə minimum 1 olmalıdır.</div>
+        <div *ngIf="studentForm.get('number')?.errors?.['max']">Nömrə maksimum 9999 ola bilər.</div>
+      </div>
+    </div>
+
+    <!-- Name -->
+    <div class="mb-2">
+      <input type="text" formControlName="name" class="form-control" placeholder="Adı">
+      <div class="text-danger mt-1" *ngIf="studentForm.get('name')?.touched && studentForm.get('name')?.invalid">
+        <div *ngIf="studentForm.get('name')?.errors?.['required']">Adı daxil edilməlidir.</div>
+        <div *ngIf="studentForm.get('name')?.errors?.['maxlength']">Ad maksimum 30 simvol ola bilər.</div>
+      </div>
+    </div>
+
+    <!-- Surname -->
+    <div class="mb-2">
+      <input type="text" formControlName="surname" class="form-control" placeholder="Soyadı">
+      <div class="text-danger mt-1" *ngIf="studentForm.get('surname')?.touched && studentForm.get('surname')?.invalid">
+        <div *ngIf="studentForm.get('surname')?.errors?.['required']">Soyadı daxil edilməlidir.</div>
+        <div *ngIf="studentForm.get('surname')?.errors?.['maxlength']">Soyad maksimum 30 simvol ola bilər.</div>
+      </div>
+    </div>
+
+    <!-- Class -->
+    <div class="mb-2">
+      <input type="number" formControlName="class" class="form-control" placeholder="Sinifi">
+      <div class="text-danger mt-1" *ngIf="studentForm.get('class')?.touched && studentForm.get('class')?.invalid">
+        <div *ngIf="studentForm.get('class')?.errors?.['required']">Sinifi daxil edilməlidir.</div>
+        <div *ngIf="studentForm.get('class')?.errors?.['min']">Sinif minimum 1 olmalıdır.</div>
+        <div *ngIf="studentForm.get('class')?.errors?.['max']">Sinif maksimum 99 ola bilər.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-success" [disabled]="studentForm.invalid || isLoading">
+      {{ isEditMode ? 'Yadda saxla' : 'Əlavə et' }}
+    </button>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bağla</button>
+  </div>
+</form>
+
+      </div>
+    </div>
+  </div>
+
+</div>

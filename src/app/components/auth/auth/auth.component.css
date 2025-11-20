@@ -1,0 +1,16 @@
+/* Tailwind yoxdursa bu hissəni istifadə et */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f3f4f6;
+}
+
+.card {
+  background: white;
+  padding: 2rem;
+  width: 380px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}

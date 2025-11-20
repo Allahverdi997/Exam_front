@@ -1,0 +1,126 @@
+<div class="container mt-4">
+
+  <!-- Add Exam Result Button -->
+  <div class="mb-3">
+    <button class="btn btn-success" (click)="openAddModal()">
+      <i class="fas fa-plus me-2"></i> Yeni İmtahan Nəticəsi Əlavə Et
+    </button>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center mb-3">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Exam Results List -->
+  <div class="card shadow-sm">
+    <div class="card-header bg-secondary text-white">
+      İmtahan Nəticələri
+    </div>
+    <div class="card-body p-0" style="max-height: 400px; overflow-y: auto;">
+      <table class="table table-striped mb-0"  >
+        <thead>
+          <tr>
+            <th>Dərs</th>
+            <th>Şagird</th>
+            <th>İmtahan Tarixi</th>
+            <th>Qiymət</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let exam of examResults; let i = index">
+            <td>{{ exam.lesson.code }} - {{ exam.lesson.name }}</td>
+            <td>{{ exam.student?.number }} - {{ exam.student?.name }}</td>
+            <td>{{ exam.examDate | date:'yyyy-MM-dd' }}</td>
+            <td>{{ exam.examValue }}</td>
+          </tr>
+          <tr *ngIf="examResults.length === 0 && !isLoading">
+            <td colspan="5" class="text-center">Heç bir nəticə tapılmadı</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Add / Update Modal -->
+  <div class="modal fade" id="examModal" tabindex="-1" aria-labelledby="examModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form [formGroup]="examForm" (ngSubmit)="submit()">
+  <div class="modal-header bg-primary text-white">
+    <h5 class="modal-title" id="examModalLabel">
+      {{ isEditMode ? 'Nəticəni Redaktə Et' : 'Yeni Nəticə Əlavə Et' }}
+    </h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <input type="hidden" formControlName="id">
+
+    <!-- Ders Select -->
+    <div class="mb-2">
+      <label>Dərs</label>
+      <select formControlName="lessonId" class="form-select">
+        <option [ngValue]="null">Seçin</option>
+        <option *ngFor="let lessonInfo of lessonInfos" [ngValue]="lessonInfo.lesson?.id">
+          {{ lessonInfo.lesson?.code }} - {{ lessonInfo.lesson?.name }}
+        </option>
+      </select>
+      <div class="text-danger mt-1" *ngIf="examForm.get('lessonId')?.touched && examForm.get('lessonId')?.invalid">
+        Dərs seçilməlidir.
+      </div>
+    </div>
+
+    <!-- Şagird Select -->
+    <div class="mb-2">
+      <label>Şagird</label>
+      <select formControlName="studentId" class="form-select">
+        <option [ngValue]="null">Seçin</option>
+        <option *ngFor="let student of students" [ngValue]="student.id">
+          {{ student.number }} - {{ student.name }}
+        </option>
+      </select>
+      <div class="text-danger mt-1" *ngIf="examForm.get('studentId')?.touched && examForm.get('studentId')?.invalid">
+        Şagird seçilməlidir.
+      </div>
+    </div>
+
+    <!-- Exam Date -->
+    <div class="mb-2">
+      <label>İmtahan Tarixi</label>
+      <input type="date" formControlName="examDate" class="form-control">
+      <div class="text-danger mt-1" *ngIf="examForm.get('examDate')?.touched && examForm.get('examDate')?.invalid">
+        İmtahan tarixi daxil edilməlidir.
+      </div>
+      <div *ngIf="examForm.get('examDate')?.errors?.['pastDate']">Tarix bu gün və ya sonrakı gün ola bilər.</div>
+    </div>
+
+    <!-- Grade -->
+    <div class="mb-2">
+      <label>Qiymət</label>
+      <input type="number" formControlName="examValue" class="form-control" min="0" max="10">
+      <div class="text-danger mt-1" *ngIf="examForm.get('examValue')?.touched && examForm.get('examValue')?.invalid">
+        <div *ngIf="examForm.get('examValue')?.errors?.['required']">Qiymət daxil edilməlidir.</div>
+        <div *ngIf="examForm.get('examValue')?.errors?.['min']">Qiymət minimum 0 olmalıdır.</div>
+        <div *ngIf="examForm.get('examValue')?.errors?.['max']">Qiymət maksimum 10 ola bilər.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-success" [disabled]="examForm.invalid || isLoading">
+      {{ isEditMode ? 'Yadda saxla' : 'Əlavə et' }}
+    </button>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bağla</button>
+  </div>
+</form>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+

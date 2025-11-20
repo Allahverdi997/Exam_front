@@ -1,0 +1,90 @@
+<div class="container mt-4">
+
+  <!-- Add Lesson Button -->
+  <div class="mb-3">
+    <button class="btn btn-success" (click)="openAddModal()">
+      <i class="fas fa-plus me-2"></i> Yeni Dərs Əlavə Et
+    </button>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center mb-3">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Lessons List -->
+  <div class="card shadow-sm">
+    <div class="card-header bg-secondary text-white">
+      Dərslər
+    </div>
+    <div class="card-body p-0" style="max-height: 400px; overflow-y: auto;">
+      <table class="table table-striped mb-0">
+        <thead>
+          <tr>
+            <th>Kod</th>
+            <th>Adı</th>
+            <th>Sinifi</th>
+            <th>Müəllim Adı</th>
+            <th>Müəllim Soyadı</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let lesson of lessons; let i = index">
+            <td>{{ lesson.lesson?.code }}</td>
+            <td>{{ lesson.lesson?.name }}</td>
+            <td>{{ lesson.class }}</td>
+            <td>{{ lesson.teacher?.name }}</td>
+            <td>{{ lesson.teacher?.surname }}</td>
+          </tr>
+          <tr *ngIf="lessons.length === 0 && !isLoading">
+            <td colspan="6" class="text-center">Heç bir dərs tapılmadı</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Add / Update Modal -->
+  <div class="modal fade" id="lessonModal" tabindex="-1" aria-labelledby="lessonModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form [formGroup]="lessonForm" (ngSubmit)="submit()">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="lessonModalLabel">
+              {{ isEditMode ? 'Dərsi Redaktə Et' : 'Yeni Dərs Əlavə Et' }}
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-2">
+              <input type="hidden" formControlName="id">
+            </div>
+            <div class="mb-2">
+              <input type="text" formControlName="code" class="form-control" placeholder="Dərsin kodu">
+            </div>
+            <div class="mb-2">
+              <input type="text" formControlName="name" class="form-control" placeholder="Dərsin adı">
+            </div>
+            <div class="mb-2">
+              <input type="number" formControlName="class" class="form-control" placeholder="Sinifi">
+            </div>
+            <div class="mb-2">
+              <input type="text" formControlName="teacherName" class="form-control" placeholder="Müəllim adı">
+            </div>
+            <div class="mb-2">
+              <input type="text" formControlName="teacherSurname" class="form-control" placeholder="Müəllim soyadı">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success" [disabled]="isLoading">{{ isEditMode ? 'Yadda saxla' : 'Əlavə et' }}</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bağla</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+

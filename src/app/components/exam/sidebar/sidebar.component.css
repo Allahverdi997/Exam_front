@@ -1,0 +1,66 @@
+.offcanvas-body {
+  padding: 0;
+}
+
+.list-group-item a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.list-group-item a:hover {
+  background-color: #f0f0f0;
+}
+
+.list-group-item a {
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s, transform 0.3s;
+  padding: 0.75rem 1rem;
+}
+
+.list-group-item a:hover {
+  background-color: #e9ecef;
+  transform: translateX(5px);
+}
+
+.offcanvas-header {
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  left: -250px; /* default gizli */
+  top: 0;
+  transition: left 0.3s;
+  z-index: 1050;
+  background-color: #f8f9fa;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.1);
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar-header {
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.list-group-item a {
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  transition: background-color 0.3s;
+}
+
+.list-group-item a:hover {
+  background-color: #e9ecef;
+}
+
+
+

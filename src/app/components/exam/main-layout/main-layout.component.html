@@ -1,0 +1,19 @@
+<div class="main-layout d-flex">
+  <!-- Sidebar -->
+  <app-sidebar (sidebarToggled)="onSidebarToggled($event)"></app-sidebar>
+
+  <!-- Main content -->
+  <div class="content flex-grow-1 p-3" [style.marginLeft.px]="sidebarMargin">
+    <!-- Navbar -->
+    <nav class="navbar bg-light shadow-sm mb-3">
+      <div class="container-fluid">
+        <button class="btn btn-primary btn-lg shadow-lg" type="button" (click)="toggleSidebar()">
+          <i class="fas fa-bars me-2"></i> Menu
+        </button>
+        <span class="navbar-brand ms-3 fw-bold">Dashboard</span>
+      </div>
+    </nav>
+
+    <router-outlet></router-outlet>
+  </div>
+</div>
